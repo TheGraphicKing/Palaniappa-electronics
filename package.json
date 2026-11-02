@@ -1,0 +1,12 @@
+{
+  "name": "palaniappa-electronics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website and online B2B catalogue for Palaniappa Electronics, Chennai",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --serve"
+  },
+  "engines": { "node": ">=18" }
+}
