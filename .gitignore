@@ -1,5 +1,12 @@
-dist/
 node_modules/
+.next/
+out/
+dist/
+dist-artifact/
+.vercel/
+.env*.local
+.env
+*.tsbuildinfo
+next-env.d.ts
 .DS_Store
 __pycache__/
-dist-artifact/

@@ -1,41 +1,38 @@
-# Palaniappa Electronics — website & online B2B catalogue
+# Palaniappa Electronics — website & B2B catalogue
 
-This is a fast, SEO-ready static website for **Palaniappa Electronics, Chennai**. It is a Samsung distributor and B2B supplier of commercial products. The site replaces the PDF catalogue with a searchable online catalogue: 17 solution ranges and 228 products, each with an "Add to enquiry" button that sends the quote request on WhatsApp or by e-mail.
+This is the production website for Palaniappa Electronics, Chennai. It is built with **Next.js 15 (App Router), TypeScript and Tailwind CSS**, and every page is statically generated. A single server route handles enquiries.
 
-## Deploy to Vercel
+- **Catalogue:** 10 product families, 235 products and lines, and 229 product detail pages (`/products/[slug]`)
+- **Requirement basket:** add products, set quantities, add per-item notes, then submit one RFQ and get a confirmation with a reference
+- **Discovery:** search, filters (category, industry, brand), sorting and URL-synced state; 6 industry landing pages; a brand directory that labels each relationship
+- **SEO:** unique metadata and canonical URLs; JSON-LD for Organization, WebSite+SearchAction, LocalBusiness, BreadcrumbList, CollectionPage, Product (no fabricated offers) and FAQPage; sitemap with images; robots; 308 redirects for legacy URLs
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTheGraphicKing%2FPalaniappa-electronics&project-name=palaniappa-electronics)
+See [`docs/AUDIT.md`](docs/AUDIT.md) for the content inventory, URL map and open discrepancies.
 
-You can also import the repo in Vercel. `vercel.json` already sets everything up: the build command is `node build.mjs`, the output folder is `dist`, and clean URLs are on. There are no npm dependencies.
-
-Optional environment variable:
-- `SITE_URL`: the canonical domain, e.g. `https://www.palaniappaelectronics.in`. If you don't set it, the site uses the Vercel production URL.
-
-## Local development
-
+## Run
 ```bash
-node build.mjs --serve   # http://localhost:4173
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start
 ```
 
-## How it's organised
+## Enquiry delivery (required for online RFQs)
+`POST /api/enquiry` validates the request on the server and delivers it through whichever channels are configured. Set these in **Vercel → Project → Settings → Environment Variables** (see `.env.example`):
 
-| Path | What it is |
+| Variable | Purpose |
 |---|---|
-| `src/data/site.mjs` | Business facts: phones, address, stats, FAQs, industries, Samsung range |
-| `src/data/catalog.json` | Every category, section, brand, product and image, generated from the PDF |
-| `tools/extract.py` | Regenerates `catalog.json` and crops all product photos and logos from the catalogue PDF |
-| `build.mjs` | Zero-dependency generator for the HTML pages, JSON-LD, sitemap.xml and robots.txt |
-| `src/css/styles.css` | Design system (the "Palaniappa Teal" palette, taken from the logo) |
-| `src/js/main.js` | Lenis smooth scroll, GSAP scroll animations, 3D tilt, enquiry list, catalogue search, lightbox |
-| `src/js/hero3d.js` | Three.js particle vortex in the hero, based on the catalogue cover art and lazy-loaded |
+| `RESEND_API_KEY`, `ENQUIRY_TO_EMAIL`, `ENQUIRY_FROM_EMAIL` | Email every enquiry through [Resend](https://resend.com) (verify the sending domain first) |
+| `ENQUIRY_WEBHOOK_URL`, `ENQUIRY_WEBHOOK_SECRET` | POST each enquiry as JSON to a CRM, Zapier, Make or a Google Apps Script |
+| `NEXT_PUBLIC_SITE_URL` | Canonical domain (defaults to the Vercel production URL, then palaniappaelectronics.in) |
 
-### Updating the catalogue
-1. `pdftoppm -r 250 -png catalogue.pdf /tmp/pages/p`
-2. Edit the product lists and crop boxes in `tools/extract.py`
-3. `python3 tools/extract.py /tmp/pages && node build.mjs`
+If no channel is configured, the API returns 503. The form then tells the visitor plainly that the enquiry **was not sent**, and offers the same pre-filled enquiry on WhatsApp or by email. It never shows a false success message. `GET /api/enquiry` reports `{ configured: true|false }`.
 
-## SEO
-- One static HTML page per solution range, with a unique title and meta description, a canonical URL, Open Graph and Twitter tags
-- JSON-LD on every page: Organization/Store with address and contact points, WebSite with SearchAction, FAQPage, BreadcrumbList, CollectionPage and ItemList
-- `sitemap.xml` (it includes an image sitemap) and `robots.txt`
-- Semantic HTML, alt text on every image, explicit image sizes (no layout shift), self-hosted fonts, WebP images and lazy loading
+## Updating products
+- Business facts: `lib/site.ts`
+- Product families, industries and brand relationships: `lib/catalog.ts`
+- Product records and images: `data/catalog.json` and `public/images/`, regenerated from the PDF with:
+  ```bash
+  pdftoppm -r 250 -png catalogue.pdf /tmp/pages/p
+  python3 tools/extract.py /tmp/pages
+  ```
+The data model is plain typed JSON, so it can later move to a CMS or a product database without changing the page templates.

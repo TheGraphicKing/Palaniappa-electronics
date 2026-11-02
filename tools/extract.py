@@ -16,8 +16,8 @@ from PIL import Image, ImageChops
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGES = sys.argv[1] if len(sys.argv) > 1 else "/tmp/pages"
-IMG_OUT = os.path.join(ROOT, "src", "assets", "img")
-DATA_OUT = os.path.join(ROOT, "src", "data", "catalog.json")
+IMG_OUT = os.path.join(ROOT, "public", "images")
+DATA_OUT = os.path.join(ROOT, "data", "catalog.json")
 SCALE = 2066 / 827.0
 
 _page_cache = {}
@@ -47,8 +47,21 @@ def trim(im, thresh=48, pad=10):
     return im.crop((x1, y1, x2, y2))
 
 
+# Catalogue photos on pages 3-7 carry printed caption pills (bottom-left, or
+# top-left for kiosks). Trim those strips so photos are clean. Page units.
+LABEL_BOTTOM_PAGES = {3, 4, 5, 6, 7}
+LABEL_BOTTOM_SKIP = {"hospitality-tv/boot-up-logo-and-video.webp", "hospitality-tv/hepi-guest-interface.webp", "digital-signage-kiosks/multi-zone-layout-with-ticker.webp"}
+KIOSKS = {"a-type-kiosk", "t-type-kiosk", "k-type-kiosk", "self-ordering-kiosk"}
+
+
 def crop(p, box, out_rel, do_trim=False, inset=2, max_w=1400, quality=80, square_pad=False):
     x1, y1, x2, y2 = box
+    name = out_rel.split("/")[-1].replace(".webp", "")
+    if not do_trim and not out_rel.startswith(("brands/", "customers/", "site/")):
+        if name in KIOSKS or (out_rel.endswith("/_hero.webp") and p == 4 and box[1] > 590):
+            y1 += 30
+        elif p in LABEL_BOTTOM_PAGES and out_rel not in LABEL_BOTTOM_SKIP and box[3] - box[1] > 120:
+            y2 -= 34
     b = tuple(int(round(v * SCALE)) for v in (x1 + inset, y1 + inset, x2 - inset, y2 - inset))
     im = page(p).crop(b)
     if do_trim:
@@ -66,7 +79,7 @@ def crop(p, box, out_rel, do_trim=False, inset=2, max_w=1400, quality=80, square
     path = os.path.join(IMG_OUT, out_rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     im.save(path, "WEBP", quality=quality, method=6)
-    return "/assets/img/" + out_rel, im.size
+    return "/images/" + out_rel, im.size
 
 
 def grid(cols, rows):
@@ -560,11 +573,8 @@ def main():
     data = {"brands": {}, "customers": {}, "categories": []}
 
     # Site imagery
-    crop(1, (175, 70, 662, 225), "site/logo-lockup.webp", max_w=900)
-    crop(1, (175, 70, 333, 225), "site/logo-mark.webp", max_w=400)
     crop(2, (88, 868, 361, 1050), "site/warehouse-chromepet.webp", inset=4)
     crop(2, (466, 868, 739, 1050), "site/our-team.webp", inset=4)
-    crop(1, (0, 520, 827, 1030), "site/spiral.webp", inset=0)
 
     for name, (p, b) in BRANDS.items():
         src, size = crop(p, b, "brands/%s.webp" % slug(name), do_trim=True, inset=1, quality=90)
