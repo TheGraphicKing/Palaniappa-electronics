@@ -10,9 +10,10 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { site } from "./src/data/site.mjs";
 
+const ARTIFACT = process.argv.includes("--artifact");
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(ROOT, "src");
-const OUT = path.join(ROOT, "dist");
+const OUT = path.join(ROOT, ARTIFACT ? "dist-artifact" : "dist");
 const data = JSON.parse(fs.readFileSync(path.join(SRC, "data/catalog.json"), "utf8"));
 const CATS = data.categories;
 const BRANDS = data.brands;
@@ -486,7 +487,7 @@ function cataloguePage() {
   <span class="eyebrow fade-in">B2B catalogue 2026 · always up to date</span>
   <h1>${splitTitle(["The whole catalogue.", "Searchable."])}</h1>
   <p class="lead fade-in">${TOTAL}+ products across ${CATS.length} ranges. Search, filter, tap a photo to zoom and build your enquiry list as you go — no PDF to download.</p>
-  <div class="hero-ctas fade-in" style="margin-top:24px"><button type="button" class="btn btn-amber" data-open-enquiry>${I.list} My enquiry list</button><a class="btn btn-ghost" href="/assets/Palaniappa-Electronics-B2B-Catalogue-2026.pdf" download>Download PDF version</a></div>
+  <div class="hero-ctas fade-in" style="margin-top:24px"><button type="button" class="btn btn-amber" data-open-enquiry>${I.list} My enquiry list</button>${ARTIFACT ? "" : `<a class="btn btn-ghost" href="/assets/Palaniappa-Electronics-B2B-Catalogue-2026.pdf" download>Download PDF version</a>`}</div>
 </div></section>
 <div class="cat-tools"><div class="wrap">
   <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><label class="search" style="flex:1;min-width:240px"><span class="sr-only">Search products</span>${I.search}<input id="cat-search" type="search" placeholder="Search e.g. kiosk, minibar, cassette AC, Samsung…" autocomplete="off"></label><span class="result-count" aria-live="polite"></span></div>
@@ -598,7 +599,7 @@ function contactPage() {
     <a class="ccard-line reveal" href="tel:${P.enquiry.tel}"><span class="ic">${I.phone}</span><span><h3>General &amp; Samsung enquiries</h3><p>${P.enquiry.display}<br>${P.enquiry.mail}</p></span></a>
     <a class="ccard-line reveal" href="https://wa.me/${P.b2b.wa}" target="_blank" rel="noopener"><span class="ic">${I.wa}</span><span><h3>WhatsApp</h3><p>Message our B2B team — we reply fast.</p></span></a>
     <a class="ccard-line reveal" href="${site.address.maps}" target="_blank" rel="noopener"><span class="ic">${I.pin}</span><span><h3>Admin office &amp; warehouse</h3><p>${esc(site.address.full)}</p><p style="margin-top:6px"><span style="color:var(--teal-700);font-weight:600">Get directions →</span></p></span></a>
-    <div class="map reveal"><iframe src="${site.address.embed}" title="Map: Palaniappa Electronics, Chromepet, Chennai" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    ${ARTIFACT ? `<a class="map map-card reveal" href="${site.address.maps}" target="_blank" rel="noopener">${I.pin}<b>Nagalkeni, Chromepet, Chennai 600044</b><span>Open in Google Maps →</span></a>` : `<div class="map reveal"><iframe src="${site.address.embed}" title="Map: Palaniappa Electronics, Chromepet, Chennai" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`}
   </div>
   <div class="panel reveal" id="enquiry">
     <span class="eyebrow">Send an enquiry</span><h2 style="font-size:1.7rem">Request a quotation</h2>
@@ -676,7 +677,29 @@ function copyDir(a, b) {
     f.isDirectory() ? copyDir(s, d) : fs.copyFileSync(s, d);
   }
 }
+// Artifact hosting has no clean URLs or root-relative paths: rewrite every
+// internal link to a relative .html path and unwrap the root page.
+function relativize(html, rel) {
+  const depth = rel.split("/").length - 1;
+  const pre = "../".repeat(depth);
+  html = html.replace(/(\s(?:href|src|data-img|data-href))="\/([^"]*)"/g, (m, attr, p) => {
+    if (p.startsWith("/")) return m; // protocol-relative
+    const [pathPart, hash = ""] = p.split("#");
+    const clean = pathPart.split("?")[0];
+    let out;
+    if (clean === "") out = "index.html";
+    else if (/\.[a-z0-9]+$/i.test(clean)) out = clean;
+    else out = clean.replace(/\/$/, "") + ".html";
+    return `${attr}="${pre}${out}${hash ? "#" + hash : ""}"`;
+  });
+  if (rel === "index.html") {
+    html = html.replace(/^<!doctype html>\s*/i, "").replace(/<html[^>]*>\s*<head>\s*/i, "").replace(/<meta charset="utf-8">\s*/i, "")
+      .replace(/<meta name="viewport"[^>]*>\s*/i, "").replace(/<\/head>\s*<body>/i, "").replace(/<\/body>\s*<\/html>\s*$/i, "");
+  }
+  return html;
+}
 function write(rel, html) {
+  if (ARTIFACT && rel.endsWith(".html")) html = relativize(html, rel);
   const f = path.join(OUT, rel);
   fs.mkdirSync(path.dirname(f), { recursive: true });
   fs.writeFileSync(f, html);
@@ -689,6 +712,7 @@ function build() {
   copyDir(path.join(SRC, "css"), path.join(OUT, "assets/css"));
   copyDir(path.join(SRC, "js"), path.join(OUT, "assets/js"));
   copyDir(path.join(SRC, "public"), OUT);
+  if (ARTIFACT) fs.rmSync(path.join(OUT, "assets/Palaniappa-Electronics-B2B-Catalogue-2026.pdf"), { force: true });
   const h = crypto.createHash("md5");
   for (const f of ["css/styles.css", "js/main.js", "js/hero3d.js"]) h.update(fs.readFileSync(path.join(SRC, f)));
   assetHash = h.digest("hex").slice(0, 8);

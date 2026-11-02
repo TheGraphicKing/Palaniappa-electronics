@@ -9,6 +9,8 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var CFG = window.PE || {};
+  var SCRIPT_SRC = (document.currentScript && document.currentScript.src) || location.href;
+  var abs = function (u) { try { return new URL(u, location.href).href; } catch (e) { return u; } };
 
   function store(k, v) {
     try {
@@ -216,7 +218,7 @@
       e.preventDefault();
       var id = b.getAttribute("data-id"), i = find(id);
       if (i > -1) { list.splice(i, 1); toast("Removed from your enquiry list"); }
-      else { list.push({ id: id, name: b.getAttribute("data-name"), cat: b.getAttribute("data-cat"), img: b.getAttribute("data-img"), qty: 1 }); toast("Added “" + b.getAttribute("data-name") + "” to your enquiry", true); }
+      else { list.push({ id: id, name: b.getAttribute("data-name"), cat: b.getAttribute("data-cat"), img: abs(b.getAttribute("data-img")), qty: 1 }); toast("Added “" + b.getAttribute("data-name") + "” to your enquiry", true); }
       save();
       return;
     }
@@ -281,9 +283,22 @@
       var url;
       if (via === "mail") url = "mailto:" + (form.getAttribute("data-mail") || CFG.mail) + "?subject=" + encodeURIComponent(m.subject) + "&body=" + encodeURIComponent(m.body);
       else url = "https://wa.me/" + (form.getAttribute("data-wa") || CFG.wa) + "?text=" + encodeURIComponent(m.body);
+      var waUrl = "https://wa.me/" + (form.getAttribute("data-wa") || CFG.wa) + "?text=" + encodeURIComponent(m.body);
+      var mailUrl = "mailto:" + (form.getAttribute("data-mail") || CFG.mail) + "?subject=" + encodeURIComponent(m.subject) + "&body=" + encodeURIComponent(m.body);
       var st = $(".form-status", form);
-      if (st) { st.textContent = via === "mail" ? "Your e-mail app has opened with the enquiry filled in — just press send." : "WhatsApp has opened with your enquiry filled in — just press send."; st.classList.add("show"); }
-      window.open(url, via === "mail" ? "_self" : "_blank", "noopener");
+      if (st) {
+        st.innerHTML = "Your enquiry is ready. If nothing opened, use one of these:" +
+          '<span class="send-links"><a href="' + esc(waUrl) + '" target="_blank" rel="noopener">Open WhatsApp</a><a href="' + esc(mailUrl) + '">Open e-mail</a><button type="button" data-copy>Copy message</button></span>' +
+          '<small style="display:block;margin-top:8px;opacity:.8">WhatsApp ' + esc((form.getAttribute("data-wa") || CFG.wa).replace(/^91/, "+91 ")) + ' · ' + esc(form.getAttribute("data-mail") || CFG.mail) + '</small>';
+        st.classList.add("show");
+        var cp = $("[data-copy]", st);
+        cp.addEventListener("click", function () {
+          var done = function () { cp.textContent = "Copied"; };
+          var fail = function () { cp.textContent = "Copy not allowed here"; };
+          try { navigator.clipboard.writeText(m.body).then(done, fail); } catch (err) { fail(); }
+        });
+      }
+      try { if (via === "mail") location.href = url; else window.open(url, "_blank", "noopener"); } catch (err) {}
     });
   });
 
@@ -359,7 +374,7 @@
   if (hero3d && !reduced) {
     var canWebGL = (function () { try { var c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } })();
     if (canWebGL) {
-      var go = function () { import("/assets/js/hero3d.js").then(function (m) { m.default(hero3d); }).catch(function () {}); };
+      var go = function () { import(new URL("hero3d.js", SCRIPT_SRC).href).then(function (m) { m.default(hero3d); }).catch(function () {}); };
       if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1200 }); else setTimeout(go, 400);
     }
   }

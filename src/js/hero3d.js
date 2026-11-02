@@ -1,6 +1,6 @@
 /* Hero 3D: the dotted vortex from the catalogue cover, rebuilt as an
    interactive WebGL particle field. Lazy-loaded only on the home page. */
-import * as THREE from "/assets/vendor/three.module.min.js";
+import * as THREE from "../vendor/three.module.min.js";
 
 export default function init(host) {
   const canvas = document.createElement("canvas");
