@@ -20,18 +20,18 @@ export default function ProductsPage() {
 
   return (
     <>
-      <section className="border-b border-line bg-white">
+      <section className="page-hero border-b border-line">
         <Container className="flex flex-col gap-6 py-10 md:flex-row md:items-end md:justify-between md:py-14">
           <div>
             <Breadcrumbs items={[["Home", "/"], ["Product catalogue", "/products"]]} />
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">Product catalogue</h1>
-            <p className="mt-3 max-w-2xl text-lg text-slate">Every product from our 2026 B2B catalogue. Search and filter, then add what you need to one requirement list.</p>
+            <h1 className="mt-5 text-[2.6rem] font-semibold leading-[1.02] tracking-tightest md:text-6xl">Product catalogue</h1>
+            <p className="mt-3 max-w-2xl text-lg text-muted">Every product from our 2026 B2B catalogue. Search and filter, then add what you need to one requirement list.</p>
           </div>
           <a href="/downloads/palaniappa-electronics-b2b-catalogue-2026.pdf" className={btn.secondary} download><Download className="h-4 w-4" /> PDF catalogue (7.5 MB)</a>
         </Container>
       </section>
       <Container className="py-10">
-        <Suspense fallback={<div className="h-96 animate-pulse rounded-lg bg-white" />}>
+        <Suspense fallback={<div className="h-96 animate-pulse rounded-lg bg-surface" />}>
           <CatalogueBrowser products={lite} categories={catOpts} brands={brandOpts} industries={indOpts} />
         </Suspense>
       </Container>

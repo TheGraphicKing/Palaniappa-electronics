@@ -35,19 +35,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <div className="border-b border-line bg-white">
+      <div className="page-hero border-b border-line">
         <Container className="py-4"><Breadcrumbs items={crumbs} /></Container>
       </div>
-      <section className="bg-white">
+      <section className="bg-surface">
         <Container className="grid gap-10 pb-14 pt-8 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:self-start">
             <Photo img={p.image} alt={`${p.name}${p.brands.length ? " — " + p.brands.join(", ") : ""}`} priority className="aspect-[4/3] w-full rounded-lg border border-line" sizes="(min-width:1024px) 640px, 100vw" />
-            {p.image && !p.image.contain && <p className="mt-2 text-xs text-steel">Application photo from the 2026 catalogue. Final model and finish are confirmed in the quotation.</p>}
+            {p.image && !p.image.contain && <p className="mt-2 text-xs text-subtle">Application photo from the 2026 catalogue. Final model and finish are confirmed in the quotation.</p>}
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cobalt"><Link href={`/solutions/${c.slug}#${p.range}`} className="hover:underline">{p.rangeName}</Link> · {p.section}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brass"><Link href={`/solutions/${c.slug}#${p.range}`} className="hover:underline">{p.rangeName}</Link> · {p.section}</p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight md:text-[2.6rem] md:leading-[1.1]">{p.name}</h1>
-            <p className="mt-5 text-lg leading-relaxed text-slate">{p.description}</p>
+            <p className="mt-5 text-lg leading-relaxed text-muted">{p.description}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <AddToRequirement slug={p.slug} name={p.name} category={c.name} href={href} image={p.image?.src} size="lg" />
@@ -56,29 +56,29 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <dl className="mt-10 divide-y divide-line border-y border-line text-sm">
-              <Row label="Category"><Link href={`/solutions/${c.slug}`} className="text-cobalt hover:underline">{c.name}</Link></Row>
+              <Row label="Category"><Link href={`/solutions/${c.slug}`} className="text-brass hover:underline">{c.name}</Link></Row>
               <Row label="Range">{p.rangeName} — {p.section}</Row>
               {p.brands.length > 0 && <Row label={p.brands.length > 1 ? "Brands" : "Brand"}>{listJoin(p.brands)}{p.imported ? "; imported ranges also available" : ""}</Row>}
               {p.applications.length > 0 && <Row label="Application">{p.applications.join(", ")}</Row>}
-              {inds.length > 0 && <Row label="Industries">{inds.map((i, n) => <span key={i.slug}>{n > 0 && ", "}<Link href={`/industries/${i.slug}`} className="hover:text-cobalt hover:underline">{i.name}</Link></span>)}</Row>}
+              {inds.length > 0 && <Row label="Industries">{inds.map((i, n) => <span key={i.slug}>{n > 0 && ", "}<Link href={`/industries/${i.slug}`} className="hover:text-brass hover:underline">{i.name}</Link></span>)}</Row>}
               <Row label="Specifications">Model, size, capacity and finish depend on the brand and your project. Our team shares current specifications and datasheets with the quotation.</Row>
-              <Row label="Source">{fromCatalogue ? <>Palaniappa Electronics B2B Catalogue 2026 · <a href="/downloads/palaniappa-electronics-b2b-catalogue-2026.pdf" className="inline-flex items-center gap-1 text-cobalt hover:underline" download><Download className="h-3.5 w-3.5" />PDF</a></> : "Palaniappa Electronics website"}</Row>
+              <Row label="Source">{fromCatalogue ? <>Palaniappa Electronics B2B Catalogue 2026 · <a href="/downloads/palaniappa-electronics-b2b-catalogue-2026.pdf" className="inline-flex items-center gap-1 text-brass hover:underline" download><Download className="h-3.5 w-3.5" />PDF</a></> : "Palaniappa Electronics website"}</Row>
             </dl>
 
             {brandObjs.some((b) => b.logo) && (
               <ul className="mt-8 flex flex-wrap gap-3">
                 {brandObjs.filter((b) => b.logo).map((b) => (
-                  <li key={b.slug} className="flex h-14 items-center rounded border border-line bg-white px-4"><Image src={b.logo!.src} alt={b.name} width={b.logo!.w} height={b.logo!.h} className="max-h-8 w-auto" /></li>
+                  <li key={b.slug} className="flex h-14 items-center rounded border border-line bg-surface px-4"><Image src={b.logo!.src} alt={b.name} width={b.logo!.w} height={b.logo!.h} className="max-h-8 w-auto" /></li>
                 ))}
               </ul>
             )}
 
-            <div className="mt-10 rounded-lg bg-porcelain p-6">
+            <div className="mt-10 rounded-lg bg-canvas p-6">
               <h2 className="text-sm font-semibold">To quote quickly, tell us</h2>
-              <ul className="mt-3 grid gap-1.5 text-sm text-slate">
+              <ul className="mt-3 grid gap-1.5 text-sm text-muted">
                 <li>• Quantity and delivery location</li><li>• Preferred brand, size or model (if any)</li><li>• Timeline, and whether installation is needed</li>
               </ul>
-              <p className="mt-4 text-sm text-slate">Or call our B2B team on <a href={`tel:${site.contact.sales.tel}`} className="font-semibold text-graphite">{site.contact.sales.phone}</a>.</p>
+              <p className="mt-4 text-sm text-muted">Or call our B2B team on <a href={`tel:${site.contact.sales.tel}`} className="font-semibold text-fg">{site.contact.sales.phone}</a>.</p>
             </div>
           </div>
         </Container>
@@ -107,5 +107,5 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 }
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div className="grid grid-cols-[120px_1fr] gap-4 py-3.5"><dt className="text-slate">{label}</dt><dd className="text-graphite">{children}</dd></div>;
+  return <div className="grid grid-cols-[120px_1fr] gap-4 py-3.5"><dt className="text-muted">{label}</dt><dd className="text-fg">{children}</dd></div>;
 }

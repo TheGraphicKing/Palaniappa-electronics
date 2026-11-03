@@ -7,7 +7,7 @@ export function QuoteNow(props: { slug: string; name: string; category: string; 
   const { has, add } = useBasket();
   const router = useRouter();
   return (
-    <button type="button" onClick={() => { if (!has(props.slug)) add(props); router.push("/request-quote"); }} className="inline-flex items-center justify-center gap-2 rounded bg-graphite px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-black">
+    <button type="button" onClick={() => { if (!has(props.slug)) add(props); router.push("/request-quote"); }} className="inline-flex items-center justify-center gap-2 rounded bg-fg px-5 py-3 text-sm font-semibold text-ink-950 transition-colors hover:bg-white">
       Request a Quote
     </button>
   );

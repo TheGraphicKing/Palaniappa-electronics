@@ -57,11 +57,12 @@ export type Category = {
   image: Img | null;
   ranges: Range[];
   questions: [string, string][];
+  pages: number[]; // pages in the 2026 printed catalogue
 };
 
 type RawItem = { name: string; slug: string; img: string; w: number; h: number; desc?: string };
 type RawSection = { title: string; applications?: string[]; brands?: string[]; desc?: string; features?: [string, string][]; points?: string[]; items: RawItem[] };
-type RawCat = { slug: string; group: string; name: string; short: string; seo: string; intro: string; applications: string[]; hero: string; sections: RawSection[] };
+type RawCat = { slug: string; group: string; page: number; name: string; short: string; seo: string; intro: string; applications: string[]; hero: string; sections: RawSection[] };
 type RawData = { brands: Record<string, { logo: string; w: number; h: number }>; customers: Record<string, { name: string; logo: string; w: number; h: number }[]>; categories: RawCat[] };
 const data = raw as unknown as RawData;
 
@@ -171,7 +172,7 @@ const sectionIndustries: Record<string, IndustrySlug[]> = {
 const CONTAIN = new Set(["hotel-hospital-amenities", "in-room-amenities", "bathroom-housekeeping-amenities", "lobby-banquet-restaurant-amenities", "refrigeration-solutions", "it-infrastructure"]);
 
 /* --------------------------------------------------------- categories */
-type CatDef = Omit<Category, "ranges" | "image"> & { ranges: string[]; image: string | null; extra?: Range[] };
+type CatDef = Omit<Category, "ranges" | "image" | "pages"> & { ranges: string[]; image: string | null; extra?: Range[] };
 
 const catDefs: CatDef[] = [
   {
@@ -397,7 +398,9 @@ export const categories: Category[] = catDefs.map((d) => {
     };
   });
   const { extra, image, ...rest } = d;
-  return { ...rest, image: image ? { src: image, w: 1200, h: 800, contain: CONTAIN.has(d.ranges[0] || "") } : null, ranges: [...ranges, ...(extra || [])] };
+  const pages = d.ranges.map((rs) => rawBySlug.get(rs)!.page);
+  if (d.slug === "samsung-consumer-electronics") pages.push(2);
+  return { ...rest, pages, image: image ? { src: image, w: 1200, h: 800, contain: CONTAIN.has(d.ranges[0] || "") } : null, ranges: [...ranges, ...(extra || [])] };
 });
 
 // Samsung consumer product lines [CAT p.2 + MSG] and the Hikrobot HMR [WEB].

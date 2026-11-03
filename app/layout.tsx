@@ -7,10 +7,13 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/ui";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
+import { Spotlight } from "@/components/spotlight";
 import { categories, categoryCount, industries } from "@/lib/catalog";
 import { SITE_URL, site } from "@/lib/site";
 
 const inter = localFont({ src: "./fonts/inter-var.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
+const display = localFont({ src: "./fonts/inter-tight-var.woff2", variable: "--font-display", weight: "100 900", display: "swap" });
+const serif = localFont({ src: "./fonts/instrument-serif-italic.woff2", variable: "--font-serif", weight: "400", style: "italic", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   formatDetection: { telephone: false },
 };
-export const viewport: Viewport = { themeColor: "#FFFFFF", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#080B11", colorScheme: "dark", width: "device-width", initialScale: 1 };
 
 const org = {
   "@context": "https://schema.org",
@@ -44,10 +47,10 @@ const org = {
 const website = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: site.name, publisher: { "@id": `${SITE_URL}/#organization` }, potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/products?q={search_term_string}` }, "query-input": "required name=search_term_string" } };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const cats = categories.map((c) => ({ slug: c.slug, name: c.name, short: c.short, count: categoryCount(c.slug) }));
-  const inds = industries.map((i) => ({ slug: i.slug, name: i.name }));
+  const cats = categories.map((c) => ({ slug: c.slug, name: c.name, short: c.short, count: categoryCount(c.slug), image: c.image?.src ?? null }));
+  const inds = industries.map((i) => ({ slug: i.slug, name: i.name, short: i.short, image: i.image }));
   return (
-    <html lang="en-IN" className={inter.variable}>
+    <html lang="en-IN" className={`${inter.variable} ${display.variable} ${serif.variable}`}>
       <body className="font-sans">
         <JsonLd data={[org, website]} />
         <BasketProvider>
@@ -56,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <BasketDrawer />
           <WhatsAppFab />
+          <Spotlight />
         </BasketProvider>
       </body>
     </html>

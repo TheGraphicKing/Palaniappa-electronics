@@ -8,11 +8,11 @@ export function AddToRequirement({ slug, name, category, href, image, size = "sm
   const { add, has, remove, ready } = useBasket();
   const inList = ready && has(slug);
   const base = size === "lg"
-    ? "inline-flex items-center justify-center gap-2 rounded px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt focus-visible:ring-offset-2"
-    : "inline-flex items-center gap-1.5 rounded px-3 py-2 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cobalt";
+    ? "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+    : "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass";
   const tone = inList
-    ? "bg-cobalt-soft text-cobalt hover:bg-[#E2E8FC]"
-    : size === "lg" ? "bg-cobalt text-white hover:bg-cobalt-dark" : "border border-line bg-white text-graphite hover:border-cobalt hover:text-cobalt";
+    ? "bg-brass-tint text-brass ring-1 ring-inset ring-brass/40 hover:bg-[#2C2619]"
+    : size === "lg" ? "bg-brass text-ink-950 hover:bg-brass-hi hover:shadow-glow" : "border border-line-strong text-fg hover:border-brass hover:bg-brass hover:text-ink-950";
   return (
     <button
       type="button"

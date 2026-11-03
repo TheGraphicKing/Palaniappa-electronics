@@ -14,24 +14,24 @@ export const metadata: Metadata = {
 export default function Solutions() {
   return (
     <>
-      <section className="border-b border-line bg-white">
+      <section className="page-hero border-b border-line">
         <Container className="py-12 md:py-16">
           <Breadcrumbs items={[["Home", "/"], ["Products & Solutions", "/solutions"]]} />
           <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">Products &amp; solutions</h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate">Ten product families covering what hotels, hospitals, campuses, offices, factories and retailers buy. Open a family to see its ranges, brands and products.</p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">Ten product families covering what hotels, hospitals, campuses, offices, factories and retailers buy. Open a family to see its ranges, brands and products.</p>
         </Container>
       </section>
       <Container className="py-14">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((c) => (
             <li key={c.slug}>
-              <Link href={`/solutions/${c.slug}`} className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-white transition-shadow hover:shadow-lift">
+              <Link href={`/solutions/${c.slug}`} className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-shadow hover:shadow-lift">
                 <Photo img={c.image} alt={c.name} className="aspect-[16/10] w-full" sizes="(min-width:1024px) 400px, 50vw" label="Range details on request" />
                 <div className="flex flex-1 flex-col p-5">
-                  <h2 className="flex items-start justify-between gap-3 text-lg font-semibold group-hover:text-cobalt">{c.name}<ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-steel" /></h2>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate">{c.short}</p>
-                  <p className="mt-4 text-xs text-steel">{c.ranges.map((r) => r.name).join(" · ")}</p>
-                  <p className="mt-2 text-xs font-medium text-graphite">{categoryCount(c.slug) ? `${categoryCount(c.slug)} products & lines` : "Models on request"}</p>
+                  <h2 className="flex items-start justify-between gap-3 text-lg font-semibold group-hover:text-brass">{c.name}<ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-subtle" /></h2>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{c.short}</p>
+                  <p className="mt-4 text-xs text-subtle">{c.ranges.map((r) => r.name).join(" · ")}</p>
+                  <p className="mt-2 text-xs font-medium text-fg">{categoryCount(c.slug) ? `${categoryCount(c.slug)} products & lines` : "Models on request"}</p>
                 </div>
               </Link>
             </li>
