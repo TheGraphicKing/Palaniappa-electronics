@@ -3,21 +3,28 @@ import type { Config } from "tailwindcss";
 // Design tokens — "Ink & Brass"
 // A dark showroom: deep blue-black surfaces, warm brass for action and emphasis,
 // the logo's teal as a quiet secondary signal, and light "plinths" for product photos.
+const v = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: ["selector", '[data-theme="dark"]'],
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      // Every colour is a CSS variable (see app/globals.css) so the site can switch
+      // between the dark "Ink & Brass" theme and its light counterpart.
       colors: {
-        ink: { 950: "#05070B", 900: "#080B11", 850: "#0C1017", 800: "#10151E", 700: "#171E2A", 600: "#212A39" },
-        canvas: "#080B11", // page background
-        surface: { DEFAULT: "#0E131B", 2: "#141A25" }, // cards, panels
-        plinth: "#F2F3F5", // light stage behind product cut-outs and logos
-        fg: "#EEF1F6", // primary text
-        muted: "#A5AEBF", // secondary text (AA on surfaces)
-        subtle: "#737E93", // tertiary text / metadata
-        line: { DEFAULT: "#1D2533", strong: "#2B3546" },
-        brass: { DEFAULT: "#D6B27A", hi: "#E8CC9A", deep: "#A9874F", tint: "#221E16" }, // primary accent
-        signal: "#5FB6C4", // logo teal, secondary accent
+        ink: { 950: v("ink-950"), 900: v("ink-900"), 850: v("ink-850"), 800: v("ink-800"), 700: v("ink-700"), 600: v("ink-600") },
+        canvas: v("canvas"), // page background
+        surface: { DEFAULT: v("surface"), 2: v("surface-2") }, // cards, panels
+        plinth: v("plinth"), // light stage behind product cut-outs and logos
+        fg: v("fg"), // primary text
+        muted: v("muted"), // secondary text
+        subtle: v("subtle"), // tertiary text / metadata
+        line: { DEFAULT: v("line"), strong: v("line-strong") },
+        brass: { DEFAULT: v("brass"), hi: v("brass-hi"), deep: v("brass-deep"), tint: v("brass-tint") }, // primary accent
+        onaccent: v("onaccent"), // text on brass
+        signal: v("signal"), // logo teal, secondary accent
+        veil: v("veil"), // white in dark theme, ink in light theme — for hairlines and glass tints
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
@@ -29,9 +36,9 @@ const config: Config = {
       letterSpacing: { tightest: "-0.045em" },
       boxShadow: {
         card: "0 1px 0 rgba(255,255,255,.04) inset",
-        lift: "0 30px 60px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(214,178,122,.25)",
-        panel: "0 40px 80px -30px rgba(0,0,0,.85)",
-        glow: "0 0 0 1px rgba(214,178,122,.35), 0 12px 40px -12px rgba(214,178,122,.45)",
+        lift: "0 30px 60px -30px rgb(var(--shadow) / .55), 0 0 0 1px rgb(var(--c-brass) / .3)",
+        panel: "0 40px 80px -30px rgb(var(--shadow) / .6)",
+        glow: "0 0 0 1px rgb(var(--c-brass) / .35), 0 12px 40px -12px rgb(var(--c-brass) / .45)",
       },
       keyframes: {
         rise: { from: { opacity: "0", transform: "translateY(14px)" }, to: { opacity: "1", transform: "none" } },

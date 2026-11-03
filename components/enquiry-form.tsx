@@ -147,8 +147,8 @@ export function EnquiryForm({ withBasket = true, defaultMessage = "", heading }:
 
       <div className="flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-md text-xs leading-relaxed text-muted">We use these details only to respond to your enquiry. See our <Link href="/privacy-policy" className="underline underline-offset-2">privacy policy</Link>.</p>
-        <button type="submit" disabled={status.kind === "sending"} className="inline-flex h-12 items-center justify-center gap-2 rounded bg-brass px-6 text-sm font-semibold text-ink-950 transition-colors hover:bg-brass-hi disabled:cursor-wait disabled:opacity-70">
-          {status.kind === "sending" ? (<><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> Sending…</>) : (<>Submit enquiry <ArrowRight className="h-4 w-4" /></>)}
+        <button type="submit" disabled={status.kind === "sending"} className="inline-flex h-12 items-center justify-center gap-2 rounded bg-brass px-6 text-sm font-semibold text-onaccent transition-colors hover:bg-brass-hi disabled:cursor-wait disabled:opacity-70">
+          {status.kind === "sending" ? (<><span className="h-4 w-4 animate-spin rounded-full border-2 border-onaccent/40 border-t-onaccent" /> Sending…</>) : (<>Submit enquiry <ArrowRight className="h-4 w-4" /></>)}
         </button>
       </div>
     </form>

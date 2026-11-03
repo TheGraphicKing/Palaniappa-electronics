@@ -28,7 +28,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink-950 text-white">
+      <section className="force-dark relative overflow-hidden bg-ink-950 text-white">
         <Image src={i.image} alt="" fill priority sizes="100vw" className="object-cover opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/85 to-ink-950/20" />
         <Container className="relative py-16 md:py-24">

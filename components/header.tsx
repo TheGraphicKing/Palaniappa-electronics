@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useBasket } from "./basket";
 import { ArrowRight, ArrowUpRight, ChevronDown, List, Menu, X } from "./icons";
+import { ThemeToggle } from "./theme-toggle";
+import { Logo } from "./logo";
 
 type NavCat = { slug: string; name: string; short: string; count: number; image: string | null };
 type NavInd = { slug: string; name: string; short: string; image: string };
@@ -41,13 +43,13 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
 
   return (
     <header className={`sticky top-0 z-40 transition-[background-color,border-color] duration-500 ${scrolled || mega ? "border-b border-line bg-ink-900/80 backdrop-blur-xl" : "border-b border-transparent bg-transparent"}`}>
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-brass focus:px-3 focus:py-2 focus:text-ink-950">Skip to content</a>
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-brass focus:px-3 focus:py-2 focus:text-onaccent">Skip to content</a>
       <div className="mx-auto flex h-16 max-w-site items-center justify-between gap-4 px-4 sm:px-6 lg:h-[76px] lg:px-10">
         <Link href="/" className="shrink-0" aria-label="Palaniappa Electronics — home">
-          <Image src="/images/brand/palaniappa-logo-reversed.png" alt="Palaniappa Electronics" width={720} height={237} priority className="h-8 w-auto lg:h-9" />
+          <Logo priority className="h-8 w-auto lg:h-9" />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-0.5 rounded-full border border-line bg-white/[0.02] p-1 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 rounded-full border border-line bg-veil/[0.02] p-1 lg:flex">
           <div onMouseEnter={() => enter("products")} onMouseLeave={leave}>
             <button type="button" aria-expanded={mega === "products"} aria-controls="mega-products" onClick={() => setMega(mega === "products" ? null : "products")} className={`${link(active("/solutions") || active("/products") || mega === "products")} inline-flex items-center gap-1`}>
               Products &amp; Solutions <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mega === "products" ? "rotate-180" : ""}`} />
@@ -64,12 +66,13 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <button type="button" onClick={() => setOpen(true)} className="relative inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-3.5 text-[13px] font-medium text-fg transition-colors hover:border-brass/60" aria-label={`Open requirement list (${ready ? count : 0} items)`}>
             <List className="h-4 w-4 text-muted" />
             <span className="hidden sm:inline">Requirement</span>
-            <span key={count} className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-[11px] font-semibold tabular-nums ${ready && count ? "animate-pop bg-brass text-ink-950" : "bg-white/10 text-muted"}`}>{ready ? count : 0}</span>
+            <span key={count} className={`grid h-5 min-w-5 place-items-center rounded-full px-1 text-[11px] font-semibold tabular-nums ${ready && count ? "animate-pop bg-brass text-onaccent" : "bg-veil/10 text-muted"}`}>{ready ? count : 0}</span>
           </button>
-          <Link href="/request-quote" className="hidden h-10 items-center rounded-full bg-brass px-5 text-[13px] font-semibold text-ink-950 transition-all hover:bg-brass-hi hover:shadow-glow md:inline-flex">Request a Quote</Link>
+          <Link href="/request-quote" className="hidden h-10 items-center rounded-full bg-brass px-5 text-[13px] font-semibold text-onaccent transition-all hover:bg-brass-hi hover:shadow-glow md:inline-flex">Request a Quote</Link>
           <button type="button" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong lg:hidden" aria-label="Open menu" aria-expanded={mobile} onClick={() => setMobile(true)}>
             <Menu className="h-5 w-5" />
           </button>
@@ -83,7 +86,7 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
             <ul className="grid grid-cols-2 gap-x-6 gap-y-0.5">
               {cats.map((c, i) => (
                 <li key={c.slug}>
-                  <Link href={`/solutions/${c.slug}`} onMouseEnter={() => setHoverCat(i)} onFocus={() => setHoverCat(i)} className={`group flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition-colors ${hoverCat === i ? "bg-white/[0.04]" : ""}`}>
+                  <Link href={`/solutions/${c.slug}`} onMouseEnter={() => setHoverCat(i)} onFocus={() => setHoverCat(i)} className={`group flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition-colors ${hoverCat === i ? "bg-veil/[0.04]" : ""}`}>
                     <span className="flex items-baseline gap-3">
                       <span className="w-5 text-[11px] tabular-nums text-subtle">{String(i + 1).padStart(2, "0")}</span>
                       <span className={`text-[14.5px] font-medium transition-colors ${hoverCat === i ? "text-fg" : "text-muted"}`}>{c.name}</span>
@@ -102,7 +105,7 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
                 <p className="text-sm font-semibold text-fg">{hc?.name}</p>
                 <p className="mt-1.5 line-clamp-3 text-[13px] leading-relaxed text-muted">{hc?.short}</p>
                 <div className="mt-auto flex gap-2 pt-5">
-                  <Link href="/products" className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-brass px-4 py-2.5 text-[13px] font-semibold text-ink-950 hover:bg-brass-hi">All products <ArrowRight className="h-3.5 w-3.5" /></Link>
+                  <Link href="/products" className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-brass px-4 py-2.5 text-[13px] font-semibold text-onaccent hover:bg-brass-hi">All products <ArrowRight className="h-3.5 w-3.5" /></Link>
                   <Link href="/solutions" className="inline-flex items-center justify-center rounded-full border border-line-strong px-4 py-2.5 text-[13px] font-semibold text-fg hover:border-brass/50">Categories</Link>
                 </div>
               </div>
@@ -129,7 +132,7 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
       {mobile && typeof document !== "undefined" && createPortal(
         <div className="fixed inset-0 z-50 flex animate-fade flex-col bg-ink-900 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="flex h-16 items-center justify-between border-b border-line px-4">
-            <Image src="/images/brand/palaniappa-logo-reversed.png" alt="Palaniappa Electronics" width={720} height={237} className="h-8 w-auto" />
+            <Logo className="h-8 w-auto" />
             <button type="button" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong" aria-label="Close menu" onClick={() => setMobile(false)} autoFocus><X className="h-5 w-5" /></button>
           </div>
           <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-5 py-6">
@@ -142,7 +145,7 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
               {[["/brands", "Brands"], ["/about", "About Us"], ["/contact", "Contact"], ["/careers", "Careers"]].map(([h, l]) => <Link key={h} href={h} className="rounded-lg border border-line px-4 py-3 text-[15px] font-medium text-fg">{l}</Link>)}
             </div>
           </nav>
-          <div className="border-t border-line p-4"><Link href="/request-quote" className="flex h-12 items-center justify-center rounded-full bg-brass text-sm font-semibold text-ink-950">Request a Quote</Link></div>
+          <div className="border-t border-line p-4"><Link href="/request-quote" className="flex h-12 items-center justify-center rounded-full bg-brass text-sm font-semibold text-onaccent">Request a Quote</Link></div>
         </div>,
         document.body,
       )}

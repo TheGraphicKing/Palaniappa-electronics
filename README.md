@@ -10,7 +10,7 @@ This is the production website for Palaniappa Electronics, Chennai. It is built 
 See [`docs/AUDIT.md`](docs/AUDIT.md) for the content inventory, URL map and open discrepancies.
 
 ## Design
-"Ink & Brass": a dark showroom theme with deep blue-black surfaces, a brass accent for actions and emphasis, and the logo teal as a secondary colour. Headings use Inter Tight, with Instrument Serif italic for emphasis and Inter for body text. Tokens are in `tailwind.config.ts`; the reversed logo is `public/images/brand/palaniappa-logo-reversed.png`; product cut-outs used in the hero are in `public/images/cutouts/`.
+"Ink & Brass": a dark showroom theme with deep blue-black surfaces, a brass accent for actions and emphasis, and the logo teal as a secondary colour. Headings use Inter Tight, with Instrument Serif italic for emphasis and Inter for body text. The site has **dark (default) and light themes**. Visitors switch with the sun/moon button in the header, and the choice is saved in their browser. Every colour is a CSS variable defined twice in `app/globals.css` (`:root` for dark, `[data-theme="light"]` for light), and `tailwind.config.ts` maps the Tailwind colour names to those variables. Wrap any element in `.force-dark` to keep it dark in both themes (used for text over photos). Tokens are in `tailwind.config.ts`; the reversed logo is `public/images/brand/palaniappa-logo-reversed.png`; product cut-outs used in the hero are in `public/images/cutouts/`.
 
 ## Deployment
 `vercel.json` pins the Vercel build to Next.js (`npm install` → `npm run build` → `.next`). This overrides project settings left over from the first static version of the site (framework "Other", output folder `dist`).

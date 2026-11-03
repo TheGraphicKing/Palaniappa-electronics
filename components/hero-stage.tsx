@@ -25,10 +25,10 @@ export function HeroStage() {
 
       {/* centre: real installation photo */}
       <div className="absolute left-1/2 top-1/2 w-[86%] -translate-x-1/2 -translate-y-1/2 [perspective:1600px] sm:w-[62%] lg:w-[54%]">
-        <figure className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-white/15 shadow-[0_60px_120px_-40px_rgba(0,0,0,.9),0_0_0_1px_rgba(214,178,122,.15)] [transform:rotateX(8deg)]">
+        <figure className="force-dark relative aspect-[16/9] overflow-hidden rounded-2xl border border-veil/15 shadow-[0_60px_120px_-40px_rgba(0,0,0,.9),0_0_0_1px_rgba(214,178,122,.15)] [transform:rotateX(8deg)]">
           <Image src="/images/led-wall-solutions/control-room-war-room-led-wall.webp" alt="Control room LED video wall installation" fill priority sizes="(min-width:1024px) 640px, 86vw" className="animate-kenburns object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-transparent to-white/5" />
-          <figcaption className="absolute bottom-3 left-4 flex items-center gap-2 rounded-full border border-white/15 bg-ink-950/60 px-3 py-1.5 text-[11px] font-medium text-fg backdrop-blur-md">
+          <figcaption className="absolute bottom-3 left-4 flex items-center gap-2 rounded-full border border-veil/15 bg-ink-950/60 px-3 py-1.5 text-[11px] font-medium text-fg backdrop-blur-md">
             <span className="h-1.5 w-1.5 rounded-full bg-brass" />Indoor LED wall · control room
           </figcaption>
         </figure>
@@ -41,7 +41,7 @@ export function HeroStage() {
             <span className={`relative block ${p.size} max-w-[16vw] drop-shadow-[0_24px_30px_rgba(0,0,0,.6)] transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105`}>
               <Image src={p.src} alt="" width={p.w} height={p.h} sizes="180px" className="h-auto w-full" />
             </span>
-            <span className="mt-3 inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-ink-900/70 px-3 py-1.5 text-[11.5px] font-medium text-fg backdrop-blur-md transition-colors group-hover:border-brass/60 group-hover:text-brass">
+            <span className="mt-3 inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-veil/10 bg-ink-900/70 px-3 py-1.5 text-[11.5px] font-medium text-fg backdrop-blur-md transition-colors group-hover:border-brass/60 group-hover:text-brass">
               <span className="h-px w-4 bg-brass/70" />{p.label}
             </span>
           </span>

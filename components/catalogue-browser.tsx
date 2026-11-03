@@ -131,7 +131,7 @@ export function CatalogueBrowser({ products, categories, brands, industries }: P
           <div className="mt-8 rounded-lg border border-dashed border-line bg-surface p-10 text-center">
             <p className="font-semibold text-fg">No products match these filters.</p>
             <p className="mt-1 text-sm text-muted">Try fewer filters, or tell us what you need — through Ingram Micro and our brand partners we can source beyond this catalogue.</p>
-            <div className="mt-5 flex justify-center gap-3"><button type="button" onClick={reset} className="rounded border border-line px-4 py-2 text-sm font-semibold">Reset filters</button><Link href="/request-quote" className="rounded bg-brass px-4 py-2 text-sm font-semibold text-ink-950">Describe your requirement</Link></div>
+            <div className="mt-5 flex justify-center gap-3"><button type="button" onClick={reset} className="rounded border border-line px-4 py-2 text-sm font-semibold">Reset filters</button><Link href="/request-quote" className="rounded bg-brass px-4 py-2 text-sm font-semibold text-onaccent">Describe your requirement</Link></div>
           </div>
         ) : (
           <>
@@ -166,7 +166,7 @@ export function CatalogueBrowser({ products, categories, brands, industries }: P
           <div className="absolute inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-lg bg-surface">
             <div className="flex items-center justify-between border-b border-line px-5 py-4"><p className="font-semibold">Filters</p><button type="button" onClick={() => setPanel(false)} className="grid h-9 w-9 place-items-center rounded border border-line" aria-label="Close" autoFocus><X className="h-4 w-4" /></button></div>
             <div className="flex-1 overflow-y-auto px-5 py-5">{filters}</div>
-            <div className="flex gap-2 border-t border-line p-4"><button type="button" onClick={reset} className="h-11 flex-1 rounded border border-line text-sm font-semibold">Reset</button><button type="button" onClick={() => setPanel(false)} className="h-11 flex-[2] rounded bg-brass text-sm font-semibold text-ink-950">Show {results.length} products</button></div>
+            <div className="flex gap-2 border-t border-line p-4"><button type="button" onClick={reset} className="h-11 flex-1 rounded border border-line text-sm font-semibold">Reset</button><button type="button" onClick={() => setPanel(false)} className="h-11 flex-[2] rounded bg-brass text-sm font-semibold text-onaccent">Show {results.length} products</button></div>
           </div>
         </div>
       )}

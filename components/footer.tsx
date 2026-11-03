@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Logo } from "./logo";
 import { categories, industries } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { ArrowRight } from "./icons";
@@ -12,11 +12,11 @@ export function Footer() {
       <div className="relative mx-auto max-w-site px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col gap-8 border-b border-line py-14 md:flex-row md:items-end md:justify-between">
           <p className="max-w-xl font-display text-3xl font-semibold leading-tight tracking-tight text-fg md:text-4xl">Tell us what the space needs. <em className="em">We&rsquo;ll source the rest.</em></p>
-          <Link href="/request-quote" className="inline-flex items-center gap-2 self-start rounded-full bg-brass px-6 py-3.5 text-sm font-semibold text-ink-950 transition-all hover:bg-brass-hi hover:shadow-glow md:self-auto">Request a Quote <ArrowRight className="h-4 w-4" /></Link>
+          <Link href="/request-quote" className="inline-flex items-center gap-2 self-start rounded-full bg-brass px-6 py-3.5 text-sm font-semibold text-onaccent transition-all hover:bg-brass-hi hover:shadow-glow md:self-auto">Request a Quote <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
           <div>
-            <Image src="/images/brand/palaniappa-logo-reversed.png" alt="Palaniappa Electronics" width={720} height={237} className="h-9 w-auto" />
+            <Logo className="h-9 w-auto" />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">Distributor and B2B supplier of electronics, commercial displays, hospitality equipment and commercial appliances. Chennai, since 2004.</p>
           </div>
           <div>

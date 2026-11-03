@@ -42,8 +42,8 @@ export default function Home() {
         <div className="absolute right-0 top-1/3 h-[520px] w-[520px] rounded-full bg-signal/[0.07] blur-[140px]" aria-hidden="true" />
         <Container className="relative pb-16 pt-12 text-center md:pb-20 md:pt-14">
           <div className="animate-rise">
-            <p className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white/[0.03] py-1.5 pl-1.5 pr-4 text-xs text-muted backdrop-blur">
-              <span className="rounded-full bg-brass px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider text-ink-950">Since 2004</span>
+            <p className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-veil/[0.03] py-1.5 pl-1.5 pr-4 text-xs text-muted backdrop-blur">
+              <span className="rounded-full bg-brass px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider text-onaccent">Since 2004</span>
               Samsung distributor &amp; B2B supplier · Chennai
             </p>
             <h1 className="mx-auto mt-8 max-w-5xl font-display text-[2.9rem] font-semibold leading-[0.98] tracking-tightest text-fg sm:text-7xl xl:text-[5.6rem]">
@@ -88,7 +88,7 @@ export default function Home() {
           <SectionHead eyebrow="Company scale" title="Built over *two decades* in Chennai." intro="Two businesses under one roof: Samsung distribution to retailers, and institutional supply for hotels, hospitals, campuses, retail and manufacturing." />
           <h2 id="scale-h" className="sr-only">Company scale</h2>
           <div className="grid auto-rows-[minmax(180px,auto)] gap-3 md:grid-cols-4">
-            <div className="spot group relative overflow-hidden rounded-2xl border border-line md:col-span-2 md:row-span-2">
+            <div className="force-dark spot group relative overflow-hidden rounded-2xl border border-line md:col-span-2 md:row-span-2">
               <Image src="/images/site/warehouse-chromepet.webp" alt="Palaniappa Electronics warehouse, Chromepet" fill sizes="(min-width:768px) 640px, 100vw" className="object-cover opacity-70 transition duration-1000 group-hover:scale-105 group-hover:opacity-90" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-transparent" />
               <div className="relative flex h-full min-h-[360px] flex-col justify-end p-7">
@@ -108,7 +108,7 @@ export default function Home() {
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-subtle">Since June 2004</span>
               <span><span className="block font-display text-5xl font-semibold tracking-tight text-fg">21<em className="em text-4xl"> yrs</em></span><span className="mt-1 block text-sm text-muted">Built on trust, ethics and methodical systems</span></span>
             </div>
-            <div className="spot relative overflow-hidden rounded-2xl border border-line">
+            <div className="force-dark spot relative overflow-hidden rounded-2xl border border-line">
               <Image src="/images/site/our-team.webp" alt="The Palaniappa Electronics team" fill sizes="320px" className="object-cover opacity-60" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950 to-ink-950/20" />
               <span className="relative flex h-full flex-col justify-end p-7"><span className="block font-display text-5xl font-semibold tracking-tight text-fg">50+</span><span className="mt-1 block text-sm text-muted">Experienced employees</span></span>
@@ -142,7 +142,7 @@ export default function Home() {
         <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 [scrollbar-width:thin] sm:px-6 lg:px-10 2xl:px-[calc((100vw_-_1320px)/2_+_2.5rem)]">
           {industries.map((ind, n) => (
             <li key={ind.slug} className="w-[80%] shrink-0 snap-start sm:w-[44%] lg:w-[30%] xl:w-[24%]">
-              <Link href={`/industries/${ind.slug}`} className="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-xl border border-white/10 p-6">
+              <Link href={`/industries/${ind.slug}`} className="force-dark group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-xl border border-veil/10 p-6">
                 <Image src={ind.image} alt="" fill sizes="(min-width:1280px) 320px, (min-width:640px) 45vw, 80vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
                 <span className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/50 to-ink-950/10" />
                 <span className="absolute left-6 top-6 text-xs tabular-nums text-fg/70">{String(n + 1).padStart(2, "0")}</span>
@@ -227,7 +227,7 @@ export default function Home() {
               <Image src="/images/site/warehouse-chromepet.webp" alt="Palaniappa Electronics warehouse, Chromepet, Chennai" fill sizes="(min-width:1024px) 600px, 100vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-tr from-ink-950/50 to-transparent" />
             </div>
-            <div className="absolute -bottom-6 right-4 rounded-xl border border-white/10 bg-ink-900/90 px-5 py-4 shadow-panel backdrop-blur-xl sm:right-8">
+            <div className="absolute -bottom-6 right-4 rounded-xl border border-veil/10 bg-ink-900/90 px-5 py-4 shadow-panel backdrop-blur-xl sm:right-8">
               <span className="block font-display text-3xl font-semibold tracking-tight text-fg">20,000 <span className="text-base font-normal text-muted">sq ft</span></span>
               <span className="text-xs text-subtle">Warehouse, Chromepet</span>
             </div>

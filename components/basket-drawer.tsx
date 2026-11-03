@@ -81,7 +81,7 @@ export function BasketDrawer() {
             </div>
             {items.length > 0 && (
               <div className="space-y-2 border-t border-line p-5">
-                <Link href="/request-quote" className="flex h-12 items-center justify-center gap-2 rounded bg-brass text-sm font-semibold text-ink-950 hover:bg-brass-hi">Continue to enquiry <ArrowRight className="h-4 w-4" /></Link>
+                <Link href="/request-quote" className="flex h-12 items-center justify-center gap-2 rounded bg-brass text-sm font-semibold text-onaccent hover:bg-brass-hi">Continue to enquiry <ArrowRight className="h-4 w-4" /></Link>
                 <button type="button" onClick={clear} className="w-full py-2 text-xs font-medium text-muted hover:text-fg">Clear all products</button>
               </div>
             )}

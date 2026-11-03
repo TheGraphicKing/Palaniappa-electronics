@@ -42,9 +42,9 @@ export function Showroom({ families }: { families: ShowroomFamily[] }) {
               <div className="absolute inset-0 grid place-items-center"><div className="blueprint absolute inset-0" /><Box className="relative h-12 w-12 text-brass/60" /></div>
             )}
             {!f.contain && <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />}
-            <div className="absolute left-5 top-5 flex gap-2">
-              <span className="rounded-full border border-white/15 bg-ink-950/70 px-3 py-1 text-[11px] font-medium tracking-wide text-fg backdrop-blur">{pagesLabel(f.pages)}</span>
-              <span className="rounded-full border border-white/15 bg-ink-950/70 px-3 py-1 text-[11px] font-medium tracking-wide text-fg backdrop-blur">{f.count ? `${f.count} products & lines` : "Models on request"}</span>
+            <div className="force-dark absolute left-5 top-5 flex gap-2">
+              <span className="rounded-full border border-veil/15 bg-ink-950/70 px-3 py-1 text-[11px] font-medium tracking-wide text-fg backdrop-blur">{pagesLabel(f.pages)}</span>
+              <span className="rounded-full border border-veil/15 bg-ink-950/70 px-3 py-1 text-[11px] font-medium tracking-wide text-fg backdrop-blur">{f.count ? `${f.count} products & lines` : "Models on request"}</span>
             </div>
           </div>
           <div className="relative border-t border-line p-7">
@@ -53,7 +53,7 @@ export function Showroom({ families }: { families: ShowroomFamily[] }) {
                 <h3 key={f.slug} className="animate-rise font-display text-2xl font-semibold tracking-tight text-fg">{f.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{f.short}</p>
               </div>
-              <Link href={`/solutions/${f.slug}`} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brass px-5 py-3 text-sm font-semibold text-ink-950 transition-all hover:bg-brass-hi hover:shadow-glow">Open range <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={`/solutions/${f.slug}`} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brass px-5 py-3 text-sm font-semibold text-onaccent transition-all hover:bg-brass-hi hover:shadow-glow">Open range <ArrowRight className="h-4 w-4" /></Link>
             </div>
             {f.products.length > 0 && (
               <ul className="mt-6 grid grid-cols-4 gap-3">
@@ -80,7 +80,7 @@ export function Showroom({ families }: { families: ShowroomFamily[] }) {
             <Link href={`/solutions/${x.slug}`} className="block overflow-hidden rounded-xl border border-line bg-surface">
               <div className={`relative aspect-[4/3] ${x.contain ? "bg-plinth" : "bg-ink-800"}`}>
                 {x.image ? <Image src={x.image} alt="" fill sizes="80vw" className={x.contain ? "object-contain p-8 mix-blend-multiply" : "object-cover"} /> : <div className="absolute inset-0 grid place-items-center"><Box className="h-8 w-8 text-brass/60" /></div>}
-                <span className="absolute left-3 top-3 rounded-full bg-ink-950/75 px-2.5 py-1 text-[11px] text-fg backdrop-blur">{String(n + 1).padStart(2, "0")} · {pagesLabel(x.pages)}</span>
+                <span className="force-dark absolute left-3 top-3 rounded-full bg-ink-950/75 px-2.5 py-1 text-[11px] text-fg backdrop-blur">{String(n + 1).padStart(2, "0")} · {pagesLabel(x.pages)}</span>
               </div>
               <div className="p-4">
                 <p className="flex items-start justify-between gap-2 font-display font-semibold text-fg">{x.name}<ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-brass" /></p>

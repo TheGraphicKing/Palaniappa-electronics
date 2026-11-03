@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/ui";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { Spotlight } from "@/components/spotlight";
+import { themeInitScript } from "@/lib/theme";
 import { categories, categoryCount, industries } from "@/lib/catalog";
 import { SITE_URL, site } from "@/lib/site";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   formatDetection: { telephone: false },
 };
-export const viewport: Viewport = { themeColor: "#080B11", colorScheme: "dark", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#080B11", width: "device-width", initialScale: 1 };
 
 const org = {
   "@context": "https://schema.org",
@@ -50,7 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const cats = categories.map((c) => ({ slug: c.slug, name: c.name, short: c.short, count: categoryCount(c.slug), image: c.image?.src ?? null }));
   const inds = industries.map((i) => ({ slug: i.slug, name: i.name, short: i.short, image: i.image }));
   return (
-    <html lang="en-IN" className={`${inter.variable} ${display.variable} ${serif.variable}`}>
+    <html lang="en-IN" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${display.variable} ${serif.variable}`}>
+      <head><script dangerouslySetInnerHTML={{ __html: themeInitScript }} /></head>
       <body className="font-sans">
         <JsonLd data={[org, website]} />
         <BasketProvider>

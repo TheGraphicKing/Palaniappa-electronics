@@ -5,9 +5,9 @@ import { Box } from "./icons";
 
 const ring = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2 focus-visible:ring-offset-canvas";
 export const btn = {
-  primary: `group/btn inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3.5 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-brass-hi hover:shadow-glow disabled:opacity-60 ${ring}`,
-  secondary: `inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-fg backdrop-blur transition-colors hover:border-brass/50 hover:bg-white/[0.06] ${ring}`,
-  dark: `inline-flex items-center justify-center gap-2 rounded-full bg-fg px-6 py-3.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-white ${ring}`,
+  primary: `group/btn inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3.5 text-sm font-semibold text-onaccent transition-all duration-300 hover:bg-brass-hi hover:shadow-glow disabled:opacity-60 ${ring}`,
+  secondary: `inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-veil/[0.03] px-6 py-3.5 text-sm font-semibold text-fg backdrop-blur transition-colors hover:border-brass/50 hover:bg-veil/[0.06] ${ring}`,
+  dark: `inline-flex items-center justify-center gap-2 rounded-full bg-fg px-6 py-3.5 text-sm font-semibold text-canvas transition-opacity hover:opacity-90 ${ring}`,
   ghost: "inline-flex items-center gap-1.5 text-sm font-semibold text-brass transition-colors hover:text-brass-hi",
 };
 

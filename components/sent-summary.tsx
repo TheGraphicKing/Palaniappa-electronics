@@ -28,7 +28,7 @@ export function SentSummary() {
         </div>
       )}
       <p className="mt-8 text-sm text-muted">Need to add something? Call {site.contact.sales.phone} and quote your reference.</p>
-      <div className="mt-6 flex gap-3"><Link href="/products" className="rounded bg-brass px-5 py-3 text-sm font-semibold text-ink-950">Continue browsing</Link><Link href="/" className="rounded border border-line px-5 py-3 text-sm font-semibold">Home</Link></div>
+      <div className="mt-6 flex gap-3"><Link href="/products" className="rounded bg-brass px-5 py-3 text-sm font-semibold text-onaccent">Continue browsing</Link><Link href="/" className="rounded border border-line px-5 py-3 text-sm font-semibold">Home</Link></div>
     </div>
   );
 }
