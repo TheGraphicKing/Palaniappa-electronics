@@ -1,5 +1,7 @@
 # Palaniappa Electronics — website & B2B catalogue
 
+> **Concept demo by Triotic Studio. Proprietary, all rights reserved. See [LICENSE](LICENSE).** Demo mode is on by default: a banner shows on every page and search engines are told not to index the site. Set `NEXT_PUBLIC_DEMO_MODE=false` only after an agreement is signed.
+
 This is the production website for Palaniappa Electronics, Chennai. It is built with **Next.js 15 (App Router), TypeScript and Tailwind CSS**, and every page is statically generated. A single server route handles enquiries.
 
 - **Catalogue:** 10 product families, 235 products and lines, and 229 product detail pages (`/products/[slug]`)

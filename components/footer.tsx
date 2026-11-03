@@ -3,6 +3,7 @@ import { Logo } from "./logo";
 import { categories, industries } from "@/lib/catalog";
 import { site } from "@/lib/site";
 import { ArrowRight } from "./icons";
+import { DEMO_MODE, STUDIO, YEAR } from "@/lib/demo";
 
 export function Footer() {
   const c = site.contact;
@@ -40,7 +41,13 @@ export function Footer() {
           </div>
         </div>
         <div className="flex flex-col gap-3 border-t border-line py-6 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Palaniappa Electronics, Chennai. Brand names and logos belong to their respective owners.</p>
+          {DEMO_MODE ? (
+            <p className="max-w-3xl leading-relaxed">
+              <strong className="font-semibold text-muted">Concept demo.</strong> Website design, code and interactive features © {YEAR} {STUDIO}. All rights reserved. Shown to Palaniappa Electronics for evaluation only; no licence to use, copy, host or adapt is granted without a written agreement with {STUDIO}. The Palaniappa Electronics name, logo, product information and photos belong to Palaniappa Electronics; other brand names and logos belong to their respective owners.
+            </p>
+          ) : (
+            <p>© {new Date().getFullYear()} Palaniappa Electronics, Chennai. Brand names and logos belong to their respective owners. Website by {STUDIO}.</p>
+          )}
           <p className="flex gap-5"><Link href="/privacy-policy" className="hover:text-fg">Privacy Policy</Link><Link href="/terms-conditions" className="hover:text-fg">Terms &amp; Conditions</Link><Link href="/sitemap.xml" className="hover:text-fg">Sitemap</Link></p>
         </div>
       </div>

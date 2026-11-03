@@ -2,6 +2,8 @@
   "name": "palaniappa-electronics",
   "version": "2.0.0",
   "private": true,
+  "license": "UNLICENSED",
+  "author": "Triotic Studio",
   "description": "Website and B2B product catalogue for Palaniappa Electronics, Chennai",
   "scripts": {
     "dev": "next dev",

@@ -11,6 +11,8 @@ import { Spotlight } from "@/components/spotlight";
 import { DEFAULT_PALETTE, paletteInitScript } from "@/lib/theme";
 import { PalettePicker } from "@/components/palette-picker";
 import { CommandPalette } from "@/components/command-palette";
+import { DemoBanner } from "@/components/demo-banner";
+import { DEMO_MODE, STUDIO } from "@/lib/demo";
 import { categories, categoryCount, industries } from "@/lib/catalog";
 import { SITE_URL, site } from "@/lib/site";
 
@@ -27,6 +29,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", images: ["/og.jpg"] },
   alternates: { canonical: "/" },
   formatDetection: { telephone: false },
+  ...(DEMO_MODE ? { robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } }, authors: [{ name: STUDIO }], creator: STUDIO } : {}),
 };
 export const viewport: Viewport = { themeColor: [{ media: "(prefers-color-scheme: light)", color: "#F4F5F8" }, { media: "(prefers-color-scheme: dark)", color: "#080B11" }], width: "device-width", initialScale: 1 };
 
@@ -36,7 +39,7 @@ const org = {
   "@id": `${SITE_URL}/#organization`,
   name: site.name,
   url: SITE_URL,
-  logo: `${SITE_URL}/images/brand/palaniappa-logo.png`,
+  logo: `${SITE_URL}/images/brand/palaniappa-logo-light.png`,
   foundingDate: "2004-06",
   description: site.description,
   email: site.contact.sales.email,
@@ -58,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans">
         <JsonLd data={[org, website]} />
         <BasketProvider>
+          <DemoBanner />
           <Header cats={cats} inds={inds} />
           <main id="main">{children}</main>
           <Footer />

@@ -4,7 +4,7 @@ export function Logo({ className = "h-9 w-auto", priority = false }: { className
   return (
     <>
       <Image src="/images/brand/palaniappa-logo-reversed.png" alt="Palaniappa Electronics" width={720} height={237} priority={priority} className={`logo-dark ${className}`} />
-      <Image src="/images/brand/palaniappa-logo.png" alt="Palaniappa Electronics" width={720} height={236} priority={priority} className={`logo-light ${className}`} />
+      <Image src="/images/brand/palaniappa-logo-light.png" alt="Palaniappa Electronics" width={720} height={236} priority={priority} className={`logo-light ${className}`} />
     </>
   );
 }
