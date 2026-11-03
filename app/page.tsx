@@ -6,6 +6,9 @@ import { ProductCard } from "@/components/product-card";
 import { Showroom, type ShowroomFamily } from "@/components/showroom";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 import { HeroStage } from "@/components/hero-stage";
+import { RoomBuilder, type BuilderPreset } from "@/components/room-builder";
+import { PRESETS } from "@/lib/room-presets";
+import { getCategory } from "@/lib/catalog";
 
 const FEATURED = ["hotel-guest-room-tv", "t-type-kiosk", "classroom-interactive-panel", "glass-door-mini-bar", "washer-extractor", "360-degree-cassette-ac", "maharaja-suite", "hotel-rfid-card-locks"];
 const SHOWROOM_PICKS: Record<string, string[]> = {
@@ -24,6 +27,13 @@ export default function Home() {
       products: pool.slice(0, 4).map((p) => ({ slug: p.slug, name: p.name, image: p.image?.src ?? null, contain: !!p.image?.contain, href: productHref(p) })),
     };
   });
+  const presets: BuilderPreset[] = PRESETS.map((pr) => ({
+    ...pr,
+    items: pr.items.map(([slug, per]) => {
+      const p = getProduct(slug)!;
+      return { slug, name: p.name, category: getCategory(p.category)!.name, href: productHref(p), image: p.image?.src ?? null, contain: !!p.image?.contain, per };
+    }),
+  }));
   const logoBrands = brands.filter((b) => b.logo);
   const keyPartners = [
     { name: "Samsung", line: "Consumer electronics & appliances distributor for Chennai & suburbs. Authorised distributor for commercial TV & displays." },
@@ -56,6 +66,7 @@ export default function Home() {
               <Link href="/solutions" className={btn.primary}>Explore Our Solutions <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" /></Link>
               <Link href="/request-quote" className={btn.secondary}>Submit a Requirement</Link>
             </div>
+            <p className="mt-6 text-sm text-subtle">Fitting out a property? <a href="#room-builder" className="font-semibold text-brass hover:underline">Build a room list in seconds →</a> <span className="hidden sm:inline">· Press <kbd className="rounded border border-line-strong px-1.5 py-0.5 text-[11px]">⌘K</kbd> to search everything</span></p>
           </div>
           <HeroStage />
           {/* mobile product chips */}
@@ -131,6 +142,14 @@ export default function Home() {
         <Container>
           <SectionHead eyebrow="The showroom" title="Ten product families. *One* purchase order." intro="Move through the index to preview each family. The images are real installations and products from our 2026 catalogue." action={<Link href="/products" className={btn.secondary}>Browse all {productPages.length} products <ArrowRight className="h-4 w-4" /></Link>} />
           <Showroom families={families} />
+        </Container>
+      </section>
+
+      {/* ───────────── Room Builder ───────────── */}
+      <section id="room-builder" className="scroll-mt-24 border-t border-line py-20 md:py-28" aria-label="Room Builder">
+        <Container>
+          <SectionHead eyebrow="Room Builder" title="Equip a whole property in *one click*." intro="Pick a space, set how many you are fitting out, and get an instant list of everything it needs from our catalogue. Tweak the quantities, then send it for a quotation." />
+          <RoomBuilder presets={presets} />
         </Container>
       </section>
 

@@ -10,7 +10,8 @@ type Ctx = {
   items: BasketItem[];
   ready: boolean;
   count: number;
-  add: (i: AddInput) => void;
+  add: (i: AddInput, opts?: { silent?: boolean }) => void;
+  notify: (msg: string) => void;
   remove: (slug: string) => void;
   setQty: (slug: string, qty: number) => void;
   setNote: (slug: string, note: string) => void;
@@ -55,13 +56,13 @@ export function BasketProvider({ children }: { children: React.ReactNode }) {
     t.current = setTimeout(() => setToast(null), 3200);
   }, []);
 
-  const add = useCallback((i: AddInput) => {
+  const add = useCallback((i: AddInput, opts?: { silent?: boolean }) => {
     setItems((cur) => {
       const ex = cur.find((x) => x.slug === i.slug);
       if (ex) return cur.map((x) => (x.slug === i.slug ? { ...x, qty: x.qty + (i.qty || 1) } : x));
       return [...cur, { ...i, qty: Math.max(1, i.qty || 1) }];
     });
-    flash(`Added “${i.name}” to your requirement`);
+    if (!opts?.silent) flash(`Added “${i.name}” to your requirement`);
   }, [flash]);
 
   const remove = useCallback((slug: string) => setItems((cur) => cur.filter((x) => x.slug !== slug)), []);
@@ -70,7 +71,7 @@ export function BasketProvider({ children }: { children: React.ReactNode }) {
   const clear = useCallback(() => setItems([]), []);
   const has = useCallback((slug: string) => items.some((x) => x.slug === slug), [items]);
 
-  const value = useMemo<Ctx>(() => ({ items, ready, count: items.length, add, remove, setQty, setNote, clear, has, open, setOpen, toast }), [items, ready, add, remove, setQty, setNote, clear, has, open, toast]);
+  const value = useMemo<Ctx>(() => ({ items, ready, count: items.length, add, notify: flash, remove, setQty, setNote, clear, has, open, setOpen, toast }), [items, ready, add, flash, remove, setQty, setNote, clear, has, open, toast]);
   return <BasketCtx.Provider value={value}>{children}</BasketCtx.Provider>;
 }
 

@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useBasket } from "./basket";
-import { ArrowRight, ArrowUpRight, ChevronDown, List, Menu, X } from "./icons";
-import { ThemeToggle } from "./theme-toggle";
+import { ArrowRight, ArrowUpRight, ChevronDown, List, Menu, Search, X } from "./icons";
 import { Logo } from "./logo";
 
 type NavCat = { slug: string; name: string; short: string; count: number; image: string | null };
@@ -66,7 +65,8 @@ export function Header({ cats, inds }: { cats: NavCat[]; inds: NavInd[] }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          <button type="button" onClick={() => window.dispatchEvent(new Event("open-command-palette"))} className="hidden h-10 items-center gap-2.5 rounded-full border border-line-strong pl-3.5 pr-2 text-[13px] text-muted transition-colors hover:border-brass/60 hover:text-fg xl:inline-flex" aria-label="Search products (Ctrl+K)"><Search className="h-4 w-4" />Search<kbd className="rounded-md border border-line-strong px-1.5 py-0.5 font-sans text-[10.5px] text-subtle">⌘K</kbd></button>
+          <button type="button" onClick={() => window.dispatchEvent(new Event("open-command-palette"))} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong text-muted xl:hidden" aria-label="Search products"><Search className="h-4 w-4" /></button>
           <button type="button" onClick={() => setOpen(true)} className="relative inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-3.5 text-[13px] font-medium text-fg transition-colors hover:border-brass/60" aria-label={`Open requirement list (${ready ? count : 0} items)`}>
             <List className="h-4 w-4 text-muted" />
             <span className="hidden sm:inline">Requirement</span>

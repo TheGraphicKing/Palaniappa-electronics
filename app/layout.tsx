@@ -8,7 +8,9 @@ import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/ui";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { Spotlight } from "@/components/spotlight";
-import { themeInitScript } from "@/lib/theme";
+import { DEFAULT_PALETTE, paletteInitScript } from "@/lib/theme";
+import { PalettePicker } from "@/components/palette-picker";
+import { CommandPalette } from "@/components/command-palette";
 import { categories, categoryCount, industries } from "@/lib/catalog";
 import { SITE_URL, site } from "@/lib/site";
 
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   formatDetection: { telephone: false },
 };
-export const viewport: Viewport = { themeColor: "#080B11", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: [{ media: "(prefers-color-scheme: light)", color: "#F4F5F8" }, { media: "(prefers-color-scheme: dark)", color: "#080B11" }], width: "device-width", initialScale: 1 };
 
 const org = {
   "@context": "https://schema.org",
@@ -51,8 +53,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const cats = categories.map((c) => ({ slug: c.slug, name: c.name, short: c.short, count: categoryCount(c.slug), image: c.image?.src ?? null }));
   const inds = industries.map((i) => ({ slug: i.slug, name: i.name, short: i.short, image: i.image }));
   return (
-    <html lang="en-IN" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${display.variable} ${serif.variable}`}>
-      <head><script dangerouslySetInnerHTML={{ __html: themeInitScript }} /></head>
+    <html lang="en-IN" data-palette={DEFAULT_PALETTE} suppressHydrationWarning className={`${inter.variable} ${display.variable} ${serif.variable}`}>
+      <head><script dangerouslySetInnerHTML={{ __html: paletteInitScript }} /></head>
       <body className="font-sans">
         <JsonLd data={[org, website]} />
         <BasketProvider>
@@ -62,6 +64,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BasketDrawer />
           <WhatsAppFab />
           <Spotlight />
+          <PalettePicker />
+          <CommandPalette />
         </BasketProvider>
       </body>
     </html>
